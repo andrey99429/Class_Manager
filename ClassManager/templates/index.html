@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Инженерная графика 2018-2019</h1>
+            <p class="lead">Это панель управления для загрузки работ по этому курсу.</p>
+        </div>
+    </div>
+
+    <h2>Список заданий</h2>
+    <div class="accordion" id="tasks">
+    {% for task in tasks %}
+        <div class="card">
+            <div class="card-header" id="heading{{ task.id }}">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ task.id }}" aria-expanded="true" aria-controls="collapse{{ task.id }}">{{ task.name }}</button>
+                    <div class="float-right">
+                        <span>Срок сдачи:</span>
+                        <span class="badge badge-pill badge-info mt-2">{{ task.deadline }}</span>
+                    </div>
+                </h5>
+            </div>
+            <div id="collapse{{ task.id }}" class="collapse" aria-labelledby="heading{{ task.id }}" data-parent="#tasks">
+                <div class="card-body">
+                    <div class="float-right">
+                        <span>Название файла:</span>
+                        <span class="badge badge-pill badge-info mt-2">{{ task.file_name }}</span>
+                        {% if task.variant %}
+                            <br><span>Вариант:</span>
+                            <span class="badge badge-pill badge-info mt-2">{{ task.variant }}</span>
+                        {% endif %}
+                    </div>
+                    <div>
+                    {{ task.description|safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+
+{% endblock %}

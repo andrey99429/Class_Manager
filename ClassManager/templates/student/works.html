@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2 class="mt-4">Список работ:</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Название</th>
+            <th scope="col">Срок сдачи</th>
+            <th scope="col">Вариант</th>
+            <th scope="col">Сдано</th>
+            <th scope="col">Оценка</th>
+            <th scope="col">Комментарий</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for work in works %}
+        <tr>
+            <td>{{ work.task__name }}</td>
+            <td>{{ work.task__deadline }}</td>
+            <td>{{ work.variant }}</td>
+            <td>
+                {% if work.file_link == '' %}
+                Не сдано
+                {% else %}
+                {{ work.file_link|safe }} ({{ work.modified_time }})
+                {% endif %}
+            </td>
+            <td>{{ work.mark }}</td>
+            <td>{{ work.comment|safe }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

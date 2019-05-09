@@ -1,0 +1,92 @@
+body::-webkit-scrollbar {
+    display: none;
+}
+
+hr {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.sidebar-left {
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.sidebar-right {
+  box-shadow: inset 1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.sidebar-right .sidebar-sticky {
+  padding-left: 15px;
+}
+
+.main {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 60px);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.container-fluid {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.list-group-item {
+  padding: 6px 12px;
+}
+
+.iframe {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+/* criteria */
+
+.label-text {
+	font-size: 12px !important;
+}
+
+.custom-checkbox .label-text {
+  padding-top: 4px;
+}
+
+.num input[type='number'] {
+  width: 32px;
+  margin-right: 4px;
+  height: 25px;
+  margin-bottom: 2px;
+  font-size: 12px;
+  padding: 0 0 0 4px;
+}
+
+.num {
+	margin-bottom: 0;
+}
+
+.num * {
+	display: inline-block;
+}
+
+.inline * {
+    display: inline-block;
+}
+
+.mark {
+  width: 75px;
+  position: relative;
+  top: 2px;
+}
+
+.textarea {
+  height: 110px!important;
+  resize: none;
+}

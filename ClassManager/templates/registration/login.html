@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block style %}
+    <link href="{% static 'login.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+    <form class="form-signin" method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <img class="mb-4" src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Вход</h1>
+        {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+                Вы ввели неправельный логин или пароль.
+            </div>
+        {% endif %}
+
+        <label for="inputEmail" class="sr-only">Логин</label>
+        <input type="text" name="username" id="id_username" class="form-control" placeholder="Логин" required="" autofocus="" value="{% if form.username.value is not None %}{{ form.username.value }}{% endif %}">
+        <label for="inputPassword" class="sr-only">Пароль</label>
+        <input type="password" name="password" id="id_password" class="form-control" placeholder="Пароль" required="" value="{% if form.password.value is not None %}{{ form.password.value }}{% endif %}">
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+
+    </form>
+    </div>
+
+{% endblock %}

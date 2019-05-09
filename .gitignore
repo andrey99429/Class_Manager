@@ -1,0 +1,7 @@
+.idea/
+venv/
+__pycache__/
+
+GoogleAPI/credentials.json
+GoogleAPI/token.pickle
+db.sqlite3

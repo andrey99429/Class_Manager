@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block style %}
+    <link href="{% static 'checking.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'checking.js' %}"></script>
+{% endblock %}
+
+{% block over_content %}
+    <div class="container-fluid row">
+        <div class="col-2 sidebar-left pt-1">
+            <div class="sidebar-sticky">
+                <h4 class="mt-1">{{ task.name }}</h4>
+                Срок сдачи: {{ task.deadline }}
+                <hr class="mt-1 mb-1">
+                {% for variant, works in works_list %}
+                    Вариант {{ variant }} <br>
+                    <div class="list-group">
+                    {% for work in works %}
+                        <a href="?work_id={{ work.id }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center {% if work.id == current_work %}active{% endif %}">
+                            {{ work.stud_fullname }}
+                            <span class="badge badge-light badge-pill">{{ work.mark }}</span>
+                        </a>
+                    {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% if work %}
+            <div class="col-7 main">
+                {% if work.link %}<iframe class="iframe" src="{{ work.link }}"></iframe>{% endif %}
+            </div>
+            <div class="col-3 sidebar-right p-0 pt-1">
+                <div class="sidebar-sticky">
+                    Ф.И.О: {{ student.surname }} {{ student.name }} {{ student.patronymic }}<br>
+                    Группа: {{ student.group }}<br>
+                    Дата загрузки: {{ work.modified_time }}<br>
+                    Оценка: {{ work.mark }}<br>
+                    <hr class="mt-1 mb-1">
+                    <div class="list">
+                        {% for category in criteria %}
+                            <div class="category">
+                                <b>{{ forloop.counter }}.{{ category.0 }}:</b>
+                                {% for criterion in category.1 %}
+                                    {% if criterion.0 == 'num' %}
+                                        <div class="num">
+                                            <input class="form-control" type="number" value="0" min="0" {% if criterion|length == 3 %}max="{{ criterion.2 }}"{% endif %}>
+                                            <span class="label-text">{{ criterion.1 }}</span>
+                                        </div>
+                                    {% elif criterion.0 == 'check' %}
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="check{{ forloop.parentloop.counter }}.{{ forloop.counter }}">
+                                            <label class="custom-control-label label-text" for="check{{ forloop.parentloop.counter }}.{{ forloop.counter }}">{{ criterion.1 }}</label>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                <hr class="mt-1 mb-1">
+                <form action="#" method="post" class="mt-1 mb-1">
+                    {% csrf_token %}
+                    {% for item in form.hidden_fields %}
+                        {{ item }}
+                    {% endfor %}
+                    <div class="inline">
+                        <input class="form-control mark mr-1" type="number" name="{{ form.mark.html_name }}" id="{{ form.mark.id_for_label }}" value="{{ form.mark.value }}">
+                        <button type="submit" class="btn btn-primary btn-lg">Выставить</button>
+                    </div>
+                    <div class="form-group mb-2 pr-2">
+                        <label class="col-form-label" for="{{ form.comment.id_for_label }}">{{ form.comment.label }}</label>
+                        <textarea class="form-control textarea" name="{{ form.comment.html_name }}" id="{{ form.comment.id_for_label }}">{{ form.comment.value }}</textarea>
+                    </div>
+                </form>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-10"></div>
+        {% endif %}
+    </div>
+{% endblock %}
